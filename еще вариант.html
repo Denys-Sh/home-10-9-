@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="jquery-3.2.1.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#sendRequest").click(function () {
+
+                $.ajax({
+
+                    url: "note.xml",
+                    type: "GET",
+                    dataType: "xml",
+
+                    success: function (xml) {
+                       $("#to").append($(xml).find("to").text());
+                        $("#from").append($(xml).find("from").html());
+                        $("#message").append($(xml).find("body").text());
+                    },
+
+                    // в случае ошибки
+                    error: function (xhr, status, error) {
+                        // staus - возможные значения "timeout", "error", "abort", and "parsererror"
+                        alert("ERROR: " + xhr.status + " " + error);
+                    }
+                });
+
+            });
+ $("#stily").click(function () {
+        $.ajax({
+            url: "style.js",
+            type: "GET",
+            dataType: "script",
+
+            success: function (xml) {
+                $("#to").append($(xml).find("to").text());
+                //$("#from").append($(xml).find("from").text());
+                $("#message").append($(xml).find("body").text());
+                $("#from").append($(xml).find("from").html());
+            },
+
+            // в случае ошибки
+            error: function (xhr, status, error) {
+                // staus - возможные значения "timeout", "error", "abort", and "parsererror"
+                alert("ERROR: " + xhr.status + " " + error);
+            }
+        });
+    });
+
+
+
+ 
+// <div id="message"><b>Message:</b> </div>
+
+        });
+    </script>
+</head>
+<body>
+ <div id="to"><b>Фамилие:</b> </div>
+      <div id="from"><b>Имя:</b> </div>
+      <div id="message"><b>Отчество:</b> </div>
+    
+    <button id="sendRequest">Запрос</button>
+    <button id="stily">Со стилями</button>
+</body>
+</html>
